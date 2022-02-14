@@ -1,0 +1,3 @@
+[submodule "src/yanl"]
+	path = src/yanl
+	url = git@github.com:jvleta/yanl.git
