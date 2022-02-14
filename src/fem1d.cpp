@@ -5,13 +5,10 @@
 
 #include "fem1d.h"
 
-using namespace std;
-
-//****************************************************************************80
-
 int main() {
-#define NSUB 5
-#define NL 2
+  constexpr int NSUB = 5;
+  constexpr int NL = 2;
+
   double adiag[NSUB + 1];
   double aleft[NSUB + 1];
   double arite[NSUB + 1];
@@ -31,20 +28,20 @@ int main() {
 
   timestamp();
 
-  cout << "\n";
-  cout << "FEM1D\n";
-  cout << "  C++ version\n";
-  cout << "\n";
-  cout << "  Solve the two-point boundary value problem\n";
-  cout << "\n";
-  cout << "  - d/dX (P dU/dX) + Q U  =  F\n";
-  cout << "\n";
-  cout << "  on the interval [XL,XR], specifying\n";
-  cout << "  the value of U or U' at each end.\n";
-  cout << "\n";
-  cout << "  The interval [XL,XR] is broken into NSUB = " << NSUB
-       << " subintervals\n";
-  cout << "  Number of basis functions per element is NL = " << NL << "\n";
+  std::cout << "\n";
+  std::cout << "FEM1D\n";
+  std::cout << "  C++ version\n";
+  std::cout << "\n";
+  std::cout << "  Solve the two-point boundary value problem\n";
+  std::cout << "\n";
+  std::cout << "  - d/dX (P dU/dX) + Q U  =  F\n";
+  std::cout << "\n";
+  std::cout << "  on the interval [XL,XR], specifying\n";
+  std::cout << "  the value of U or U' at each end.\n";
+  std::cout << "\n";
+  std::cout << "  The interval [XL,XR] is broken into NSUB = " << NSUB
+            << " subintervals\n";
+  std::cout << "  Number of basis functions per element is NL = " << NL << "\n";
   //
   //  Initialize the data that defines the problem.
   //
@@ -74,11 +71,11 @@ int main() {
   //
   //  Terminate.
   //
-  cout << "\n";
-  cout << "FEM1D:\n";
-  cout << "  Normal end of execution.\n";
+  std::cout << "\n";
+  std::cout << "FEM1D:\n";
+  std::cout << "  Normal end of execution.\n";
 
-  cout << "\n";
+  std::cout << "\n";
   timestamp();
 
   return 0;
@@ -218,46 +215,50 @@ void geometry(double h[], int ibc, int indx[], int nl, int node[], int nsub,
   //
   //  Set the value of XN, the locations of the nodes.
   //
-  cout << "\n";
-  cout << "  Node      Location\n";
-  cout << "\n";
+  std::cout << "\n";
+  std::cout << "  Node      Location\n";
+  std::cout << "\n";
   for (i = 0; i <= nsub; i++) {
     xn[i] = ((double)(nsub - i) * xl + (double)i * xr) / (double)(nsub);
-    cout << "  " << setw(8) << i << "  " << setw(14) << xn[i] << "\n";
+    std::cout << "  " << std::setw(8) << i << "  " << std::setw(14) << xn[i]
+              << "\n";
   }
   //
   //  Set the lengths of each subinterval.
   //
-  cout << "\n";
-  cout << "Subint    Length\n";
-  cout << "\n";
+  std::cout << "\n";
+  std::cout << "Subint    Length\n";
+  std::cout << "\n";
   for (i = 0; i < nsub; i++) {
     h[i] = xn[i + 1] - xn[i];
-    cout << "  " << setw(8) << i + 1 << "  " << setw(14) << h[i] << "\n";
+    std::cout << "  " << std::setw(8) << i + 1 << "  " << std::setw(14) << h[i]
+              << "\n";
   }
   //
   //  Set the quadrature points, each of which is the midpoint
   //  of its subinterval.
   //
-  cout << "\n";
-  cout << "Subint    Quadrature point\n";
-  cout << "\n";
+  std::cout << "\n";
+  std::cout << "Subint    Quadrature point\n";
+  std::cout << "\n";
   for (i = 0; i < nsub; i++) {
     xquad[i] = 0.5 * (xn[i] + xn[i + 1]);
-    cout << "  " << setw(8) << i + 1 << "  " << setw(14) << xquad[i] << "\n";
+    std::cout << "  " << std::setw(8) << i + 1 << "  " << std::setw(14)
+              << xquad[i] << "\n";
   }
   //
   //  Set the value of NODE, which records, for each interval,
   //  the node numbers at the left and right.
   //
-  cout << "\n";
-  cout << "Subint  Left Node  Right Node\n";
-  cout << "\n";
+  std::cout << "\n";
+  std::cout << "Subint  Left Node  Right Node\n";
+  std::cout << "\n";
   for (i = 0; i < nsub; i++) {
     node[0 + i * 2] = i;
     node[1 + i * 2] = i + 1;
-    cout << "  " << setw(8) << i + 1 << "  " << setw(8) << node[0 + i * 2]
-         << "  " << setw(8) << node[1 + i * 2] << "\n";
+    std::cout << "  " << std::setw(8) << i + 1 << "  " << std::setw(8)
+              << node[0 + i * 2] << "  " << std::setw(8) << node[1 + i * 2]
+              << "\n";
   }
   //
   //  Starting with node 0, see if an unknown is associated with
@@ -293,13 +294,15 @@ void geometry(double h[], int ibc, int indx[], int nl, int node[], int nsub,
     indx[i] = *nu;
   }
 
-  cout << "\n";
-  cout << "  Number of unknowns NU = " << *nu << "\n";
-  cout << "\n";
-  cout << "  Node  Unknown\n";
-  cout << "\n";
+  std::cout << "\n";
+  std::cout << "  Number of unknowns NU = " << *nu << "\n";
+  std::cout << "\n";
+  std::cout << "  Node  Unknown\n";
+  std::cout << "\n";
+  
   for (i = 0; i <= nsub; i++) {
-    cout << "  " << setw(8) << i << "  " << setw(8) << indx[i] << "\n";
+    std::cout << "  " << std::setw(8) << i << "  " << std::setw(8) << indx[i]
+              << "\n";
   }
 
   return;
@@ -330,28 +333,29 @@ void init(int *ibc, int *nquad, double *ul, double *ur, double *xl,
   //
   //  Print out the values that have been set.
   //
-  cout << "\n";
-  cout << "  The equation is to be solved for\n";
-  cout << "  X greater than XL = " << *xl << "\n";
-  cout << "  and less than XR = " << *xr << "\n";
-  cout << "\n";
-  cout << "  The boundary conditions are:\n";
-  cout << "\n";
+  std::cout << "\n";
+  std::cout << "  The equation is to be solved for\n";
+  std::cout << "  X greater than XL = " << *xl << "\n";
+  std::cout << "  and less than XR = " << *xr << "\n";
+  std::cout << "\n";
+  std::cout << "  The boundary conditions are:\n";
+  std::cout << "\n";
 
   if (*ibc == 1 || *ibc == 3) {
-    cout << "  At X = XL, U = " << *ul << "\n";
+    std::cout << "  At X = XL, U = " << *ul << "\n";
   } else {
-    cout << "  At X = XL, U' = " << *ul << "\n";
+    std::cout << "  At X = XL, U' = " << *ul << "\n";
   }
 
   if (*ibc == 2 || *ibc == 3) {
-    cout << "  At X = XR, U = " << *ur << "\n";
+    std::cout << "  At X = XR, U = " << *ur << "\n";
   } else {
-    cout << "  At X = XR, U' = " << *ur << "\n";
+    std::cout << "  At X = XR, U' = " << *ur << "\n";
   }
 
-  cout << "\n";
-  cout << "  Number of quadrature points per element is " << *nquad << "\n";
+  std::cout << "\n";
+  std::cout << "  Number of quadrature points per element is " << *nquad
+            << "\n";
 
   return;
 }
@@ -361,11 +365,11 @@ void output(double f[], int ibc, int indx[], int nsub, int nu, double ul,
   int i;
   double u;
 
-  cout << "\n";
-  cout << "  Computed solution coefficients:\n";
-  cout << "\n";
-  cout << "  Node    X(I)        U(X(I))\n";
-  cout << "\n";
+  std::cout << "\n";
+  std::cout << "  Computed solution coefficients:\n";
+  std::cout << "\n";
+  std::cout << "  Node    X(I)        U(X(I))\n";
+  std::cout << "\n";
 
   for (i = 0; i <= nsub; i++) {
     //
@@ -395,8 +399,8 @@ void output(double f[], int ibc, int indx[], int nsub, int nu, double ul,
       u = f[indx[i] - 1];
     }
 
-    cout << "  " << setw(8) << i << "  " << setw(8) << xn[i] << "  " << setw(14)
-         << u << "\n";
+    std::cout << "  " << std::setw(8) << i << "  " << std::setw(8) << xn[i]
+              << "  " << std::setw(14) << u << "\n";
   }
 
   return;
@@ -435,16 +439,17 @@ double pp(double x) {
 void prsys(double adiag[], double aleft[], double arite[], double f[], int nu) {
   int i;
 
-  cout << "\n";
-  cout << "Printout of tridiagonal linear system:\n";
-  cout << "\n";
-  cout << "Equation  ALEFT  ADIAG  ARITE  RHS\n";
-  cout << "\n";
+  std::cout << "\n";
+  std::cout << "Printout of tridiagonal linear system:\n";
+  std::cout << "\n";
+  std::cout << "Equation  ALEFT  ADIAG  ARITE  RHS\n";
+  std::cout << "\n";
 
   for (i = 0; i < nu; i++) {
-    cout << "  " << setw(8) << i + 1 << "  " << setw(14) << aleft[i] << "  "
-         << setw(14) << adiag[i] << "  " << setw(14) << arite[i] << "  "
-         << setw(14) << f[i] << "\n";
+    std::cout << "  " << std::setw(8) << i + 1 << "  " << std::setw(14)
+              << aleft[i] << "  " << std::setw(14) << adiag[i] << "  "
+              << std::setw(14) << arite[i] << "  " << std::setw(14) << f[i]
+              << "\n";
   }
 
   return;
@@ -500,7 +505,7 @@ void timestamp() {
 
   strftime(time_buffer, TIME_SIZE, "%d %B %Y %I:%M:%S %p", tm);
 
-  cout << time_buffer << "\n";
+  std::cout << time_buffer << "\n";
 
   return;
 #undef TIME_SIZE
